@@ -26,3 +26,21 @@ This repository contains a Python-based pipeline that transforms thousands of ch
 2. Update the `MY_USERNAME` and `FILE_NAME` variables in `analyze_games.py`.
 3. Run the script to generate the `processed_chess_data.csv`.
 4. Use the CSV to generate pivot tables and charts.
+
+## 📊 Data Visualizations
+
+### 1. Opening Repertoire Strength
+Analyzing the Top 10 most played openings to determine win/loss distribution and reliability.
+![Opening Repertoire Map](./visualizations/reportoire_strength_map.png)
+
+### 2. ELO Evolution Curve
+A monthly time-series analysis showing the rating progression from initial levels to current standing.
+![Monthly ELO Progression](./visualizations/monthly_ELO_progression.png)
+
+### 3. Skill Ceiling Analysis
+Win-rate efficiency categorized by 100-point opponent rating brackets to identify the current competitive limit.
+![Win Rate by Bracket](./visualizations/win_rate_opp_brackets.png)
+
+### 4. Color Performance Comparison
+Statistical breakdown of win rates playing as White vs. Black.
+![Win Rates by Color](./visualizations/win_rates.png)
