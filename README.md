@@ -6,41 +6,39 @@ An Information Engineering approach to analyzing personal chess history. This pr
 This repository contains a Python-based pipeline that transforms thousands of chess games into actionable insights. By extracting metadata from PGN files, we can visualize performance across different opening systems and rating brackets.
 
 ## 🛠️ Tech Stack
-- **Language:** Python 3.14.4
-- **Libraries:** Pandas (Data Manipulation), Python-Chess (PGN Parsing)
-- **Visualization:** Excel Pivot Tables & Charts
+- **Language:** Python 3.12
+- **Libraries:** Pandas (data manipulation), python-chess (PGN parsing), Matplotlib (visualization)
 
 ## 📁 Repository Structure
-- `analyze_games.py`: The core processing script that cleans data and performs feature engineering.
-- `processed_chess_data.csv`: The cleaned dataset ready for visualization.
-- `/visualizations`: High-resolution charts showing key performance metrics.
-
-## 📈 Key Insights
-1. **Opening Efficiency:** A detailed look at the Top 10 openings by volume and win rate.
-2. **ELO Progression:** Monthly rating averages to show long-term improvement trends.
-3. **Skill Ceiling:** Win-rate analysis categorized by opponent rating brackets.
-4. **Color Advantage:** Statistical comparison of White vs. Black performance.
+- `analyze_games.py`: Parses raw PGN data into `processed_chess_data.csv`.
+- `generate_charts.py`: Builds every chart below from that CSV.
+- `processed_chess_data.csv`: The cleaned, feature-engineered dataset.
+- `/visualizations`: The generated charts.
 
 ## 🔧 How to Use
-1. Download your PGN file from Lichess.
-2. Update the `MY_USERNAME` and `FILE_NAME` variables in `analyze_games.py`.
-3. Run the script to generate the `processed_chess_data.csv`.
-4. Use the CSV to generate pivot tables and charts.
+1. `pip install -r requirements.txt`
+2. Download your PGN file from Lichess, then set `MY_USERNAME` and `FILE_NAME` in `analyze_games.py`.
+3. `python analyze_games.py` — parses the PGN into `processed_chess_data.csv`.
+4. `python generate_charts.py` — regenerates every chart in `/visualizations`.
 
 ## 📊 Data Visualizations
 
-### 1. Opening Repertoire Strength
-Analyzing the Top 10 most played openings to determine win/loss distribution and reliability.
+### 1. Opening Volume
+Which openings actually get played, by raw game count.
+![Top 10 Openings](./visualizations/top10_openings.png)
+
+### 2. Opening Repertoire Strength
+Volume vs. win rate for the top 15 openings — the gap between "played most" and "played best."
 ![Opening Repertoire Map](./visualizations/reportoire_strength_map.png)
 
-### 2. ELO Evolution Curve
-A monthly time-series analysis showing the rating progression from initial levels to current standing.
+### 3. ELO Evolution Curve
+Monthly average rating from first tracked game to present.
 ![Monthly ELO Progression](./visualizations/monthly_ELO_progression.png)
 
-### 3. Skill Ceiling Analysis
-Win-rate efficiency categorized by 100-point opponent rating brackets to identify the current competitive limit.
+### 4. Skill Ceiling Analysis
+Win rate by 100-point opponent rating bracket — where the win rate crosses 50% marks the current competitive ceiling.
 ![Win Rate by Bracket](./visualizations/win_rate_opp_brackets.png)
 
-### 4. Color Performance Comparison
-Statistical breakdown of win rates playing as White vs. Black.
+### 5. Color Performance Comparison
+Win rate as White vs. Black.
 ![Win Rates by Color](./visualizations/win_rates.png)
