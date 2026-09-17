@@ -1,5 +1,7 @@
 # Chess Game Performance Analysis ♟️📊
 
+*One of my first data projects (May 2026).*
+
 An Information Engineering approach to analyzing personal chess history. This project processes raw PGN data from Lichess into a structured format to identify strategic strengths, rating growth, and skill plateaus.
 
 ## 🚀 Overview
