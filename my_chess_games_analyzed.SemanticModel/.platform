@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "my_chess_games_analyzed"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0e7206fe-ebd6-4207-b581-7238086413c6"
+  }
+}

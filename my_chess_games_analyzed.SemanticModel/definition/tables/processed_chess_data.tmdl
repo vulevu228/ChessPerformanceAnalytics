@@ -1,0 +1,155 @@
+table processed_chess_data
+	lineageTag: ff87a48e-f3c2-41a2-9bd6-551d10f12ece
+
+	measure 'Games Played' = COUNTROWS(processed_chess_data)
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000001
+
+	measure Wins = CALCULATE([Games Played], processed_chess_data[Score] = 1)
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000002
+
+	measure Draws = CALCULATE([Games Played], processed_chess_data[Score] = 0.5)
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000003
+
+	measure Losses = CALCULATE([Games Played], processed_chess_data[Score] = 0)
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000004
+
+	measure 'Win Rate %' = DIVIDE([Wins], [Games Played])
+		formatString: 0.0%
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000005
+
+	measure 'Score Rate %' = DIVIDE(SUM(processed_chess_data[Score]), [Games Played])
+		formatString: 0.0%
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000006
+
+	measure 'Avg Opponent Rating' = AVERAGE(processed_chess_data[Opponent_Rating])
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000007
+
+	measure 'Avg Rating' = AVERAGE(processed_chess_data[Your_Rating])
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-00000000000e
+
+	measure 'Peak Rating' = MAX(processed_chess_data[Your_Rating])
+		formatString: #,0
+		lineageTag: c1a1b001-1000-4a11-9a11-000000000009
+
+	measure 'White Win Rate %' = CALCULATE([Win Rate %], processed_chess_data[Color] = "White")
+		formatString: 0.0%
+		lineageTag: c1a1b001-1000-4a11-9a11-00000000000b
+
+	measure 'Black Win Rate %' = CALCULATE([Win Rate %], processed_chess_data[Color] = "Black")
+		formatString: 0.0%
+		lineageTag: c1a1b001-1000-4a11-9a11-00000000000c
+
+	measure 'Color Advantage (pp)' = ([White Win Rate %] - [Black Win Rate %]) * 100
+		formatString: +#,0.0;-#,0.0;0
+		lineageTag: c1a1b001-1000-4a11-9a11-00000000000d
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4036d6d7-9ba1-4a71-944b-4a6d62e300e3
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: d9f97c6e-4949-424a-ba48-84336c20223b
+			defaultHierarchy: LocalDateTable_e2367325-b9c9-4f80-91be-7ec788881857.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Result
+		dataType: string
+		lineageTag: ad6f0c3e-6295-46ac-b023-626f27bcaf9e
+		summarizeBy: none
+		sourceColumn: Result
+
+		annotation SummarizationSetBy = Automatic
+
+	column Color
+		dataType: string
+		lineageTag: bd0dbf73-188e-4af7-a0ce-0a72374eba90
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column Your_Rating
+		dataType: int64
+		formatString: 0
+		lineageTag: 3edb4600-8783-4027-9841-8837b00e03a3
+		summarizeBy: sum
+		sourceColumn: Your_Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column Opponent_Rating
+		dataType: int64
+		formatString: 0
+		lineageTag: 0722964b-b930-4729-8875-1b8be238fe94
+		summarizeBy: sum
+		sourceColumn: Opponent_Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column Opponent_Bracket
+		dataType: int64
+		formatString: 0
+		lineageTag: 78c7ad93-8506-4520-b261-bf40c7acd17f
+		summarizeBy: sum
+		sourceColumn: Opponent_Bracket
+
+		annotation SummarizationSetBy = Automatic
+
+	column ECO
+		dataType: string
+		lineageTag: 87a62403-920f-4e61-b932-f4c3c409d1ff
+		summarizeBy: none
+		sourceColumn: ECO
+
+		annotation SummarizationSetBy = Automatic
+
+	column Opening
+		dataType: string
+		lineageTag: 936a4a1b-8577-43f5-bdb7-40b0eab214ac
+		summarizeBy: none
+		sourceColumn: Opening
+
+		annotation SummarizationSetBy = Automatic
+
+	column Score
+		dataType: double
+		lineageTag: 190d37a4-9db0-4c35-a7ca-ad1a70b63c07
+		summarizeBy: sum
+		sourceColumn: Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Outcome = SWITCH(TRUE(), processed_chess_data[Score] = 1, "Win", processed_chess_data[Score] = 0.5, "Draw", "Loss")
+		dataType: string
+		lineageTag: c1a1b001-1000-4a11-9a11-00000000000f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition processed_chess_data = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\emira\Projects\GitHub-Projects\chess-data-analysis\processed_chess_data.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"Result", type text}, {"Color", type text}, {"Your_Rating", Int64.Type}, {"Opponent_Rating", Int64.Type}, {"Opponent_Bracket", Int64.Type}, {"ECO", type text}, {"Opening", type text}, {"Score", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

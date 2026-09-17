@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "my_chess_games_analyzed"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1a4d4608-57f3-4188-9f7c-03277bfbb456"
+  }
+}

@@ -1,0 +1,5 @@
+relationship d9f97c6e-4949-424a-ba48-84336c20223b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: processed_chess_data.Date
+	toColumn: LocalDateTable_e2367325-b9c9-4f80-91be-7ec788881857.Date
+
