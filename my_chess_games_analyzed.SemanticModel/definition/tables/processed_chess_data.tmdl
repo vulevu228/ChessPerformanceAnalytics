@@ -145,7 +145,7 @@ table processed_chess_data
 		mode: import
 		source =
 				let
-				  Source = Csv.Document(File.Contents("C:\Users\emira\Projects\GitHub-Projects\chess-data-analysis\processed_chess_data.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  Source = Csv.Document(File.Contents("C:\Users\emira\Projects\GitHub-Projects\ChessPerformanceAnalytics\processed_chess_data.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
 				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
 				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"Result", type text}, {"Color", type text}, {"Your_Rating", Int64.Type}, {"Opponent_Rating", Int64.Type}, {"Opponent_Bracket", Int64.Type}, {"ECO", type text}, {"Opening", type text}, {"Score", type number}}, "en-US")
 				in
